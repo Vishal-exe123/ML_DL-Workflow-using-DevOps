@@ -36,8 +36,8 @@ def vishmodeltrain(num_classes,i):
                  input_shape=input_shape))
     model.add(BatchNormalization())
     value=vishyaml2(i)
-    for i in value:
-        exec(i)
+    for j in value:
+        exec(j)
     model.add(BatchNormalization())
     model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Dropout(0.25))
@@ -45,8 +45,8 @@ def vishmodeltrain(num_classes,i):
     model.add(Dense(256, activation='relu'))
     
     value=vishyaml1(i)
-    for i in value:
-        exec(i)
+    for j in value:
+        exec(j)
     
     model.add(BatchNormalization())
     model.add(Dropout(0.5))
