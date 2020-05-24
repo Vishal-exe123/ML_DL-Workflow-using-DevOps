@@ -7,6 +7,14 @@ from keras.layers import Dense, Dropout, Flatten
 from keras.layers import Conv2D, MaxPooling2D, BatchNormalization
 from keras import backend as K
 import yaml
+import struct
+import numpy as np
+def read_idx(filename):
+        """Credit: https://gist.github.com/tylerneylon"""
+        with open(filename, 'rb') as f:
+            zero, data_type, dims = struct.unpack('>HBB', f.read(4))
+            shape = tuple(struct.unpack('>I', f.read(4))[0] for d in range(dims))
+            return np.frombuffer(f.read(), dtype=np.uint8).reshape(shape)
 
 def vishyaml1(i):
     with open('vish1.yaml') as f:
@@ -29,7 +37,7 @@ def vishyaml2(i):
                 vishvalu = value[0:i]	
     return vishvalu
 
-def vishmodeltrain(num_classes,i):
+def vishmodeltrain(num_classes,input_shape,i):
     model = Sequential()
     model.add(Conv2D(32, kernel_size=(3, 3),
                  activation='relu',
@@ -59,15 +67,6 @@ def vishmodeltrain(num_classes,i):
 
 
 def vishloaddata():
-    import struct
-    import numpy as np
-
-    def read_idx(filename):
-        """Credit: https://gist.github.com/tylerneylon"""
-        with open(filename, 'rb') as f:
-        zero, data_type, dims = struct.unpack('>HBB', f.read(4))
-        shape = tuple(struct.unpack('>I', f.read(4))[0] for d in range(dims))
-        return np.frombuffer(f.read(), dtype=np.uint8).reshape(shape)
     x_train = read_idx("./fashion_mnist/train-images-idx3-ubyte")
     y_train = read_idx("./fashion_mnist/train-labels-idx1-ubyte")
     x_test = read_idx("./fashion_mnist/t10k-images-idx3-ubyte")
@@ -126,7 +125,7 @@ def vishloaddata():
 
     i=0
     for i in range(10):
-        model=vishmodeltrain(num_classes,i)
+        model=vishmodeltrain(num_classes,input_shape,i)
         history = model.fit(x_train, y_train,
                             batch_size=batch_size,
                             epochs=epochs,
