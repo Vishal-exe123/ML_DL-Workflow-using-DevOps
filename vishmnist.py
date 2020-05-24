@@ -124,7 +124,7 @@ def vishloaddata():
     num_pixels = x_train.shape[1] * x_train.shape[2]
 
     i=0
-    for i in range(10):
+    for i in range(6):
         model=vishmodeltrain(num_classes,input_shape,i)
         history = model.fit(x_train, y_train,
                             batch_size=batch_size,
@@ -136,7 +136,7 @@ def vishloaddata():
         print('Test loss:', score[0])
         print('Test accuracy:', score[1])
        
-        if score[1] < 0.95:
+        if score[1] < 0.95 or i==5:
             continue
         else:
             break
