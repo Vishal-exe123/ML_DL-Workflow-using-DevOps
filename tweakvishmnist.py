@@ -38,24 +38,24 @@ def vishyaml2(i):
                 vishvalu = value[0:i]	
     return vishvalu
 
-def vishmodeltrain(num_classes,input_shape,i):
+def vishmodeltrain(num_classes,input_shape,i,t):
     model = Sequential()
     model.add(Conv2D(32, kernel_size=(3, 3),
                  activation='relu',
                  input_shape=input_shape))
     model.add(BatchNormalization())
-    value=vishyaml2(i)
-    for i in value:
-        exec(i)
+    value=vishyaml2(t)
+    for j in value:
+        exec(j)
     model.add(BatchNormalization())
     model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Dropout(0.25))
     model.add(Flatten())
     model.add(Dense(256, activation='relu'))
     
-    value=vishyaml1(i)
-    for i in value:
-        exec(i)
+    value=vishyaml1(t)
+    for j in value:
+        exec(j)
     
     model.add(BatchNormalization())
     model.add(Dropout(0.5))
@@ -127,8 +127,9 @@ def vishloaddata():
     score = model.evaluate(x_test, y_test, verbose=0)
     if score[1] < 0.95:
         i=0
+        t=0
         for i in range(6):
-            model=vishmodeltrain(num_classes,input_shape,i)
+            model=vishmodeltrain(num_classes,input_shape,i,t)
             history = model.fit(x_train, y_train,
                             batch_size=batch_size,
                             epochs=epochs,
@@ -138,9 +139,9 @@ def vishloaddata():
             score = model.evaluate(x_test, y_test, verbose=0)
             print('Test loss:', score[0])
             print('Test accuracy:', score[1])
-       
+            t+=1
             if score[1] < 0.95 or i==5:
-                print("Model is creating")
+                print("Model is creating with analysis of accuracy")
                 continue
             else:
                 break

@@ -1,3 +1,6 @@
 activator:
- - "model.add(Dense(128, activation='relu'))"
- - "model.add(Dense(100, activation='relu'))"
+ - "model.add(Dense(150, activation='relu'))"
+ - "model.add(Dense(200, activation='relu'))"
+ - "model.add(Dense(100, activation='relu'))" 
+ - "model.add(Dense(220, activation='relu'))"
+ - "model.add(Dense(260, activation='relu'))"
