@@ -96,7 +96,7 @@ def vishloaddata():
     num_classes = y_test.shape[1]
     num_pixels = x_train.shape[1] * x_train.shape[2]
 
-    model=vishmodeltrain(num_classes,input_shape,i)
+    model=vishmodeltrain(num_classes,input_shape)
     history = model.fit(x_train, y_train,
                             batch_size=batch_size,
                             epochs=epochs,
