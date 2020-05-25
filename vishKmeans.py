@@ -6,13 +6,13 @@ dataset.head(2)
 
 import matplotlib.pyplot as plt
 
-plt.scatter(sat, loy)
-plt.xlabel('sat')
-plt.ylabel('loy')
-
 sat = dataset['Satisfaction']
 
 loy = dataset['Loyalty']
+
+plt.scatter(sat, loy)
+plt.xlabel('sat')
+plt.ylabel('loy')
 
 # loy = loy * 1000
 

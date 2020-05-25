@@ -140,6 +140,7 @@ def vishloaddata():
             print('Test accuracy:', score[1])
        
             if score[1] < 0.95 or i==5:
+                print("Model is creating")
                 continue
             else:
                 break
