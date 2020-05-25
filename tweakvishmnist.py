@@ -9,6 +9,7 @@ from keras import backend as K
 import yaml
 import struct
 import numpy as np
+from keras.models import load_model
 def read_idx(filename):
         """Credit: https://gist.github.com/tylerneylon"""
         with open(filename, 'rb') as f:
@@ -16,19 +17,46 @@ def read_idx(filename):
             shape = tuple(struct.unpack('>I', f.read(4))[0] for d in range(dims))
             return np.frombuffer(f.read(), dtype=np.uint8).reshape(shape)
 
-def vishmodeltrain(num_classes,input_shape):
+def vishyaml1(i):
+    with open('vish1.yaml') as f:
+    
+        vishdocs = yaml.load_all(f, Loader=yaml.FullLoader)
+    
+        for doc in vishdocs:
+            
+            for key, value in doc.items():
+                vishvalu = value[0:i]	
+    return vishvalu
+def vishyaml2(i):
+    with open('vish2.yaml') as f:
+    
+        vishdocs = yaml.load_all(f, Loader=yaml.FullLoader)
+    
+        for doc in vishdocs:
+            
+            for key, value in doc.items():
+                vishvalu = value[0:i]	
+    return vishvalu
+
+def vishmodeltrain(num_classes,input_shape,i):
     model = Sequential()
     model.add(Conv2D(32, kernel_size=(3, 3),
                  activation='relu',
                  input_shape=input_shape))
     model.add(BatchNormalization())
-    model.add(Conv2D(64, (3, 3), activation='relu'))
-    model.add(BatchNormalization())
+    value=vishyaml2(i)
+    for i in value:
+        exec(i)
     model.add(BatchNormalization())
     model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Dropout(0.25))
     model.add(Flatten())
-    model.add(Dense(128, activation='relu')) 
+    model.add(Dense(256, activation='relu'))
+    
+    value=vishyaml1(i)
+    for i in value:
+        exec(i)
+    
     model.add(BatchNormalization())
     model.add(Dropout(0.5))
     model.add(Dense(num_classes, activation='softmax'))
@@ -95,18 +123,25 @@ def vishloaddata():
 
     num_classes = y_test.shape[1]
     num_pixels = x_train.shape[1] * x_train.shape[2]
-
-    model=vishmodeltrain(num_classes,input_shape,i)
-    history = model.fit(x_train, y_train,
+    model=load_model("result.txt")
+    score = model.evaluate(x_test, y_test, verbose=0)
+    if score[1] < 0.95:
+        i=0
+        for i in range(6):
+            model=vishmodeltrain(num_classes,input_shape,i)
+            history = model.fit(x_train, y_train,
                             batch_size=batch_size,
                             epochs=epochs,
                             verbose=1,
                             validation_data=(x_test, y_test))
 
-    score = model.evaluate(x_test, y_test, verbose=0)
-    print('Test loss:', score[0])
-    print('Test accuracy:', score[1])
-    model.save("result.txt")
+            score = model.evaluate(x_test, y_test, verbose=0)
+            print('Test loss:', score[0])
+            print('Test accuracy:', score[1])
        
-
+            if score[1] < 0.95 or i==5:
+                continue
+            else:
+                break
+model.save("result.txt")
 vishloaddata()
