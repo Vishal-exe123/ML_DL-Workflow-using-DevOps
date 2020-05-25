@@ -33,7 +33,8 @@ num_pixels = x_train.shape[1] * x_train.shape[2]
 
 model=load_model("result.txt")
 score = model.evaluate(x_test, y_test, verbose=0)
-if score[1] < 0.95:
+i=4
+if score[1] < 0.95 or i<4:
          print("Model is creating, it is busy in finding perfect weights")
 else:
         print("Model is ready")
