@@ -140,7 +140,7 @@ def vishloaddata():
             print('Test loss:', score[0])
             print('Test accuracy:', score[1])
             t+=1
-            if score[1] < 0.95 or i<4:
+            if score[1] < 0.95 or (i == 4):
                 print("Model is creating with analysis of what  will be the best  accuracy")
                 continue
             else:
