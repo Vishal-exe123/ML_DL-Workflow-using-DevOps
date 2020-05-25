@@ -144,5 +144,5 @@ def vishloaddata():
                 continue
             else:
                 break
-model.save("result.txt")
 vishloaddata()
+model.save("result.txt")
