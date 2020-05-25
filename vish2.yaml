@@ -1,6 +1,6 @@
 activator:
  - "model.add(Conv2D(64, (3, 3), activation='relu', input_shape=input_shape))"
- - "model.add(Conv2D(128, (5, 5), activation='relu', input_shape=input_shape))"
- - "model.add(Conv2D(256, (3, 3), activation='relu', input_shape=input_shape))"
- - "model.add(Conv2D(260, (3, 3), activation='relu', input_shape=input_shape))"
- - "model.add(Conv2D(350, (3, 3), activation='relu', input_shape=input_shape))" 
+ - "model.add(Conv2D(70, (5, 5), activation='relu', input_shape=input_shape))"
+ - "model.add(Conv2D(100, (3, 3), activation='relu', input_shape=input_shape))"
+ - "model.add(Conv2D(120, (3, 3), activation='relu', input_shape=input_shape))"
+ - "model.add(Conv2D(130, (3, 3), activation='relu', input_shape=input_shape))" 

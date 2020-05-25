@@ -128,7 +128,7 @@ def vishloaddata():
     if score[1] < 0.95:
         i=0
         t=0
-        for i in range(6):
+        for i in range(4):
             model=vishmodeltrain(num_classes,input_shape,i,t)
             history = model.fit(x_train, y_train,
                             batch_size=batch_size,
